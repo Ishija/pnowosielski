@@ -10,12 +10,32 @@ h3 {
 p{
     text-align: center;
 }
-.history{
-    displa
-}
 .regatta{
     display: flex;
 }
 .list{
     flex:50%;
+}
+.his_part{
+    display: flex;
+}
+.history_image{
+    flex:50%;
+}
+.history{
+    margin: 0;
+    background-color: whitesmoke;
+    border: dimgray;
+}
+.banner{
+    background-image: url("banner.jpg");
+}
+footer{
+    text-align: center;
+}
+.desc{
+    display: flex;
+}
+.about{
+    flex: 50%;
 }
