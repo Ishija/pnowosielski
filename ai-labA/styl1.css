@@ -8,7 +8,7 @@ h3 {
     text-align: center;
 }
 p{
-    text-align: center;
+
 }
 .regatta{
     display: flex;
@@ -29,6 +29,7 @@ p{
 }
 .banner{
     background-image: url("banner.jpg");
+    resize: vertical;
 }
 footer{
     text-align: center;
@@ -38,4 +39,11 @@ footer{
 }
 .about{
     flex: 50%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.end{
+    background-color: whitesmoke;
+    background-size: 100% 100px;
+
 }
