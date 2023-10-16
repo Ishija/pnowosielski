@@ -1,0 +1,103 @@
+body {
+    background-image: url("backg.png");
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding:0;
+    font-family:"Baskerville Old Face";
+}
+.banner{
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 15%, rgba(5,36,93,0) 20%);
+    rgba(23,166,196,1) 50%, rgba(0,212,255,1) 100%);
+    top: 0;
+    position: fixed;
+    width: 100%;
+}
+.banner h1{
+    padding-left: 25px;
+    font-size: 2.6vw;
+    color: white;
+}
+
+.main{
+    width: 970px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 115px;
+    margin-bottom: 25px;
+    border: 1px solid white;
+    background-color: rgba(255,255,255,0.7);
+}
+.main p {
+    margin: 25px;
+    margin-top: 25px;
+    margin-right: 25px;
+}
+.history_image{
+    margin-top: 10px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+}
+.history_image>img {
+    width: 100%;
+}
+.about_image{
+    margin-top: 10px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+}
+.about_image>img{
+    width: 100%;
+}
+footer{
+    background: rgb(5,36,93);
+    background: linear-gradient(90deg, rgba(5,36,93,0) 80%, rgba(0,0,0,1) 85%);
+    position: relative;
+    height: 80px;
+    text-align: right;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    padding-right: 15px;
+}
+footer h3{
+    color:white;
+    font-size: 1vw;
+}
+footer a{
+    color: white;
+    font-size: 1vw;
+    padding-bottom: 15px;
+}
+h2{
+    font-size: 2.5vw;
+    padding-left: 25px;
+    font-style: italic;
+}
+h3{
+    font-size: 1.5vw;
+    padding-left: 25px;
+    font-style: italic;
+}
+p{
+    font-size: 1.1vw;
+}
+ul{
+    font-size: 1vw;
+}
+@media screen and (max-width: 768px) {
+    .main {
+        width: 100%;
+    }
+    h1,h2,h3,p,ul{
+        font-size: 150%;
+    }
+    .banner h1{
+        font-size: 225%;
+    }
+    footer h3,footer a{
+        font-size: 150%;
+    }
+}
