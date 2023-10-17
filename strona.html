@@ -2,19 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista To Do</title>
+    <link rel="stylesheet" href="styl.css">
 </head>
 <body>
-<h1>Lista To Do</h1>
-
-<input type="text" id="task" placeholder="Dodaj nowe zadanie">
-<input type="date" id="dueDate">
-<button id="addTask">Dodaj</button>
-
-<input type="text" id="search" placeholder="Wyszukaj zadanie">
-
-<ul id="taskList"></ul>
-
+<div class="main">
+    <h1>Lista To Do</h1>
+    <div class="search">
+        <input type="text" id="searchInput" placeholder="Szukaj...">
+    </div>
+    <ul id="todoList"></ul>
+    <div class="add">
+        <input type="text" id="taskInput" placeholder="Dodaj nowe zadanie...">
+        <input type="datetime-local" id="deadlineInput">
+        <button id="addTask">Dodaj</button>
+    </div>
+</div>
 <script src="skrypt.js"></script>
 </body>
 </html>

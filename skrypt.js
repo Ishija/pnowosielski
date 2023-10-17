@@ -1,67 +1,130 @@
-const taskList = document.getElementById("taskList");
-const taskInput = document.getElementById("task");
-const dueDateInput = document.getElementById("dueDate");
-const searchInput = document.getElementById("search");
-const addTaskButton = document.getElementById("addTask");
-const tasks = [];
+const searchInput = document.getElementById('searchInput');
+const taskInput = document.getElementById('taskInput');
+const deadlineInput = document.getElementById('deadlineInput');
+const addTaskButton = document.getElementById('addTask');
+const todoList = document.getElementById('todoList');
 
-// Funkcja dodająca nowe zadanie do listy
-function addTask() {
-    const taskText = taskInput.value;
-    const dueDate = dueDateInput.value;
-
-    if (taskText.trim() === "") {
-        alert("Wprowadź treść zadania!");
-        return;
+class Todo {
+    constructor() {
+        this.tasks = [];
+        this.term = '';
     }
-
-    tasks.push({ text: taskText, dueDate: dueDate });
-
-    renderTasks();
-    saveTasksToLocalStorage();
-    taskInput.value = "";
-    dueDateInput.value = "";
+    getFilteredTasks() {
+        return this.tasks.filter(task => task.text.toLowerCase().includes(this.term.toLowerCase()));
+    }
 }
 
-// Funkcja usuwająca zadanie z listy
-function removeTask(index) {
-    tasks.splice(index, 1);
-    renderTasks();
-    saveTasksToLocalStorage();
+const todo = new Todo();
+
+function generateTaskList(filteredTasks = todo.tasks) {
+    todoList.innerHTML = '';
+    for (let i = 0; i < filteredTasks.length; i++) {
+        const taskItem = document.createElement('li');
+        taskItem.classList.add('task-item');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = filteredTasks[i].completed;
+        checkbox.addEventListener('change', () => {
+            filteredTasks[i].completed = checkbox.checked;
+            saveTasksToLocalStorage();
+        });
+
+        taskItem.appendChild(checkbox);
+
+        const taskText = document.createElement('span');
+        const searchTerm = todo.term.toLowerCase();
+        const text = filteredTasks[i].text;
+        if (searchTerm.length > 0 && text.toLowerCase().includes(searchTerm)) {
+            const parts = text.split(new RegExp(`(${searchTerm})`, 'gi'));
+            parts.forEach(part => {
+                const span = document.createElement('span');
+                if (part.toLowerCase() === searchTerm) {
+                    span.classList.add('highlight');
+                }
+                span.textContent = part;
+                taskText.appendChild(span);
+            });
+        } else {
+            taskText.textContent = text;
+        }
+
+        taskText.classList.add('task-text');
+        taskItem.appendChild(taskText);
+
+        const deadline = document.createElement('input');
+        deadline.type = 'datetime-local';
+        deadline.value = filteredTasks[i].deadline;
+        deadline.classList.add('task-deadline');
+        taskItem.appendChild(deadline);
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edytuj';
+        editButton.addEventListener('click', () => {
+            taskText.setAttribute('contenteditable', 'true');
+            taskText.focus();
+            deadline.removeAttribute('readonly');
+        });
+
+        taskText.addEventListener('blur', () => {
+            taskText.removeAttribute('contenteditable');
+            filteredTasks[i].text = taskText.textContent;
+            saveTasksToLocalStorage();
+        });
+
+        deadline.addEventListener('change', () => {
+            filteredTasks[i].deadline = deadline.value;
+            saveTasksToLocalStorage();
+        });
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Usuń';
+        deleteButton.addEventListener('click', () => {
+            const index = todo.tasks.indexOf(filteredTasks[i]);
+            if (index !== -1) {
+                todo.tasks.splice(index, 1);
+                saveTasksToLocalStorage();
+                generateTaskList();
+            }
+        });
+
+        taskItem.appendChild(editButton);
+        taskItem.appendChild(deleteButton);
+        todoList.appendChild(taskItem);
+    }
 }
 
-// Funkcja wyświetlająca zadania na liście
-function renderTasks(filteredTasks = tasks) {
-    taskList.innerHTML = "";
-    filteredTasks.forEach((task, index) => {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `${task.text} (Termin: ${task.dueDate || "brak"}) <button onclick="removeTask(${index})">Usuń</button>`;
-        taskList.appendChild(listItem);
-    });
-}
-
-// Funkcja filtrująca i wyświetlająca zadania na liście
-function searchTasks() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const filteredTasks = tasks.filter(task => task.text.toLowerCase().includes(searchTerm));
-    renderTasks(filteredTasks);
-}
-
-// Funkcja zapisująca listę zadań do Local Storage
 function saveTasksToLocalStorage() {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(todo.tasks));
 }
 
-// Funkcja wczytująca listę zadań z Local Storage
 function loadTasksFromLocalStorage() {
-    const storedTasks = localStorage.getItem("tasks");
+    const storedTasks = localStorage.getItem('tasks');
     if (storedTasks) {
-        tasks = JSON.parse(storedTasks);
-        renderTasks();
+        todo.tasks = JSON.parse(storedTasks);
+        generateTaskList();
     }
 }
 
-addTaskButton.addEventListener("click", addTask);
-searchInput.addEventListener("input", searchTasks);
+addTaskButton.addEventListener('click', () => {
+    const taskText = taskInput.value.trim();
+    const deadline = deadlineInput.value;
+    if (taskText.length >= 3 && taskText.length <= 255 && (!deadline || new Date(deadline) > new Date())) {
+        todo.tasks.push({ text: taskText, deadline: deadline, completed: false });
+        generateTaskList();
+        saveTasksToLocalStorage();
+        taskInput.value = '';
+        deadlineInput.value = '';
+    } else {
+        alert('Niepoprawne dane! Upewnij się, że tekst ma co najmniej 3 znaki, nie więcej niż 255 znaków, ' +
+            'a data jest w przyszłości.');
+    }
+});
+
+searchInput.addEventListener('input', () => {
+    todo.term = searchInput.value;
+    const filteredTasks = todo.getFilteredTasks();
+    generateTaskList(filteredTasks);
+});
 
 loadTasksFromLocalStorage();
