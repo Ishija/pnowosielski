@@ -1,0 +1,43 @@
+#mapsContainer {
+    display: flex;
+}
+
+#map {
+    width: 800px;
+    height: 400px;
+    border: 1px solid black;
+    margin: 0 auto;
+    margin-bottom: 30px;
+
+}
+
+#puzzleContainer{
+    width: 800px;
+    height: 400px;
+    border: 1px solid black;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+#rasterMapContainer{
+    width: 800px;
+    height: 400px;
+    border: 1px solid black;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+.buttons{
+    text-align: center;
+    margin-top: 10px;
+}
+.tile {
+    width: 200px;
+    height: 100px;
+}
+.puzzle{
+    margin: 0;
+    width: 200px;
+    height: 100px;
+}
