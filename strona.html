@@ -2,22 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Weather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <title>Weather App</title>
 </head>
 <body>
-<div class="main_text">
-    <h1>Pogoda</h1>
+<h1>Weather API</h1>
+<div class="container">
+    <input type="text" id="cityInput" placeholder="Enter city">
+    <button onclick="getWeather()">Get Weather</button>
 </div>
-<div class="search_bar">
-<form action="/szukaj" method="get">
-    <input type="text" id="tekst" name="tekst" placeholder="Pogoda dla...">
-</form>
-    <button type="submit">Sprawdź pogodę</button>
-</div>
-
-<div id="pogoda"></div>
-
+<div id="currentWeather" class="weather-block"></div>
+<div id="forecast" class="weather-block"></div>
+<script src="script.js"></script>
 </body>
-<script src="script.js"> </script>
 </html>
